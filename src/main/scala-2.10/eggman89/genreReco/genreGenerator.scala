@@ -51,6 +51,8 @@ object genreGenerator {
 
    val RDD_song_details = sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).map(p =>(tag_id_hashhmap.add(p(0)), track_id_hashhmap.add(p(1))
 
+
+
   // )
      //loudness,tempo,time_signature,key,mode,duration
      ,Vectors.dense(math.round(p(4).toString.toDouble).toDouble,math.round(p(5).toString.toDouble).toDouble,
@@ -74,6 +76,9 @@ object genreGenerator {
      )
 
    )
+   sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).
+   map
+
    //RDD_song_details.foreach(println)
     val split = RDD_song_details.randomSplit(Array(0.9,0.1))
     val RDD_train_tid_attributes_tag_id = split(0)
