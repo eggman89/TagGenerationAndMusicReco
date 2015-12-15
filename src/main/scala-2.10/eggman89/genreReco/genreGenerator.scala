@@ -126,8 +126,6 @@ object genreGenerator {
     println("Precision = " + precision)
     println("End: Prediction")
 
-   //val RDD_orig = predicted_res_RDD.collect().map(p=>(track_id_hashhmap.findval(p._2),tag_id_hashhmap.findval(p._1),tag_id_hashhmap.findval(p._3)))
-  // predicted_res_RDD.foreach(println)
   }
 
 }

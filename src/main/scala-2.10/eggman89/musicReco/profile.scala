@@ -11,10 +11,7 @@ object profile {
     temp.registerTempTable("temp1")
     val temp1 = sqlContext.sql("SELECT * FROM meta_table RIGHT OUTER JOIN temp1 ON  meta_table.song_id = temp1.song_id" )
     temp1.sort(temp1("play_count").desc)
-   // temp1
-    //var sqlQuery = "SELECT * FROM meta_table JOIN triplets_table ON  meta_table.song_id = triplets_table.song_id WHERE triplets_table.user = '" +profile_id +"' ORDER BY triplets_table.play_count DESC"
 
-    //sqlContext.sql(sqlQuery)
   }
 
   def get_existing_with_attributes(sqlContext:SQLContext, profile_id:String): DataFrame={

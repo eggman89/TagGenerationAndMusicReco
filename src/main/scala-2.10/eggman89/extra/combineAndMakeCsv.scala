@@ -6,7 +6,7 @@ import org.apache.spark.{SparkContext, SparkConf}
 import org.joda.time.DateTime
 
 /**
-  * Created by sneha on 12/14/2015.
+  * Created by snehasis on 12/14/2015.
   */
 object combineAndMakeCsv {
 

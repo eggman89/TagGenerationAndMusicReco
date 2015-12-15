@@ -11,7 +11,7 @@ import org.joda.time.DateTime
 
 
 /**
- * Created by sneha on 12/5/2015.
+ * Created by snehasis on 12/5/2015.
  */
 object doRandomForest {
   def train(trainset : RDD[LabeledPoint],maxD : Int, maxB:Int, numT:Int ): RandomForestModel =

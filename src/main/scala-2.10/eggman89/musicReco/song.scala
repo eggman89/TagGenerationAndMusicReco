@@ -135,11 +135,10 @@ object song {
 
     for (tid<-id)
     {
-      // if(index < 20){
+
       tidlist = tidlist + "'" + tid + "', "
       tidinorder = tidinorder + " WHEN '" + tid+ "' THEN " + (index + 1)
 
-      // }
       index = index + 1
 
     }

@@ -9,7 +9,7 @@ import org.joda.time
 import org.joda.time.DateTime
 
 /**
- * Created by sneha on 12/5/2015.
+ * Created by snehasis on 12/5/2015.
  */
 object doNaiveBayes {
 

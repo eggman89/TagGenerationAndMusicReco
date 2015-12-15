@@ -6,7 +6,7 @@ import org.apache.spark.mllib.stat.test.ChiSqTestResult
 import org.apache.spark.rdd.RDD
 
 /**
-  * Created by sneha on 12/14/2015.
+  * Created by snehasis on 12/14/2015.
   */
 object chiSqTest {
   def do_test(attributes: RDD[LabeledPoint]) {

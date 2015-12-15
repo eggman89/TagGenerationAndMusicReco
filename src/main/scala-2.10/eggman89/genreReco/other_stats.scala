@@ -6,11 +6,11 @@ import org.apache.spark.mllib.stat.test.ChiSqTestResult
 import org.apache.spark.rdd.RDD
 
 /**
- * Created by sneha on 12/7/2015.
+ * Created by snehasis on 12/7/2015.
  */
 
 
-object chiSqTest {
+/*object chiSqTest {
   def do_test(attributes: RDD[LabeledPoint]) {
     val featureTestResults: Array[ChiSqTestResult] = Statistics.chiSqTest(attributes)
     var i = 1
@@ -20,4 +20,4 @@ object chiSqTest {
     } // summary of the test
 
   }
-}
+}*/
