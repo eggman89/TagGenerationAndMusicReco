@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/musicrecowithapachespark.iml" filepath="$PROJECT_DIR$/.idea/modules/musicrecowithapachespark.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/musicrecowithapachespark-build.iml" filepath="$PROJECT_DIR$/.idea/modules/musicrecowithapachespark-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/taggenerationandmusicreco.iml" filepath="$PROJECT_DIR$/.idea/modules/taggenerationandmusicreco.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/taggenerationandmusicreco-build.iml" filepath="$PROJECT_DIR$/.idea/modules/taggenerationandmusicreco-build.iml" />
     </modules>
   </component>
 </project>

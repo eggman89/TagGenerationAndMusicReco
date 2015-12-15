@@ -23,7 +23,7 @@ import org.joda.time.DateTime
 
 /*object global{
 
-  val artistid_hashmap = new hashmap(sc)
+  val artistid_hashmap = new eggman89.hashmap(sc)
 }
 object doLogisticRegressionWithLBFGS2 {
 
@@ -92,8 +92,8 @@ object tagGenerator2 {
     println("1: Random Forest; 2:Logistic Regression With LBFGS; 3:Decision Trees;  4:Naive Bayes 5:chiSqTest(other)")
     val method = readInt()
     //load tags and tag ids and attributes
-    val map_tagid_tag0 = new hashmap()
-    val map_tagid_tag = new hashmap()
+    val map_tagid_tag0 = new eggman89.hashmap()
+    val map_tagid_tag = new eggman89.hashmap()
     val schema_string = "track_id1 tag_id"
     val schema = StructType(schema_string.split(" ").map(fieldName =>
       if (fieldName == "tag_id") StructField(fieldName, IntegerType, true)

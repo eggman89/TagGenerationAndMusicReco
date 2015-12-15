@@ -1,6 +1,5 @@
 package eggman89.genreReco
 
-import eggman89.musicReco.hashmap
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.recommendation.Rating
 import org.apache.spark.{SparkConf, SparkContext}
@@ -37,7 +36,7 @@ object genreGenerator {
     val method = readInt()
     //load tags and tag ids and attributes
 
-    val map_tagid_tag = new hashmap()
+    val map_tagid_tag = new eggman89.hashmap()
    sc.parallelize(map_tagid_tag.obj.toSeq).toDF("user", "userid").registerTempTable("userid")
    //map_tagid_tag
     val schema_string = "track_id1 tag_id"
@@ -47,10 +46,10 @@ object genreGenerator {
     )
 
 
-   val tag_id_hashhmap = new hashmap()
-   val track_id_hashhmap = new hashmap()
+   val tag_id_hashhmap = new eggman89.hashmap()
+   val track_id_hashhmap = new eggman89.hashmap()
 
-   val RDD_song_details = sc.textFile("Dataset/msd_genre_dataset.txt").map(_.split(",")).map(p =>(tag_id_hashhmap.add(p(0)), track_id_hashhmap.add(p(1))
+   val RDD_song_details = sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).map(p =>(tag_id_hashhmap.add(p(0)), track_id_hashhmap.add(p(1))
 
   // )
      //loudness,tempo,time_signature,key,mode,duration
@@ -127,8 +126,8 @@ object genreGenerator {
     println("Precision = " + precision)
     println("End: Prediction")
 
-   val RDD_orig = predicted_res_RDD.collect().map(p=>(track_id_hashhmap.findval(p._2),tag_id_hashhmap.findval(p._1),tag_id_hashhmap.findval(p._3)))
-   RDD_orig.foreach(println)
+   //val RDD_orig = predicted_res_RDD.collect().map(p=>(track_id_hashhmap.findval(p._2),tag_id_hashhmap.findval(p._1),tag_id_hashhmap.findval(p._3)))
+  // predicted_res_RDD.foreach(println)
   }
 
 }

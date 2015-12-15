@@ -1,6 +1,6 @@
 package eggman89.musicReco
 
-import eggman89.musicReco.hashmap
+import eggman89.hashmap
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
@@ -36,12 +36,7 @@ object RecoEngine {
     Logger.getLogger("akka").setLevel(Level.OFF)
     Logger.getLogger("INFO").setLevel(Level.OFF)
 
-    val hadoopConf=sc.hadoopConfiguration
-    hadoopConf.set("fs.s3.impl", "org.apache.hadoop.fs.s3native.NativeS3FileSystem")
-    hadoopConf.set("fs.s3.awsAccessKeyId","AKIAIC5VOLL6W2KED5LQ")
-      hadoopConf.set("fs.s3.awsSecretAccessKey","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")
-
-    val userid_hashmap = new hashmap()
+     val userid_hashmap = new hashmap()
     val songid_hashmap = new hashmap()
 
 
@@ -51,8 +46,10 @@ object RecoEngine {
 
     val rawUserSongPlaycount = sc.textFile(path + "train_triplets1234.txt").map(_.split("\t")).collect().map(p => Rating(userid_hashmap.add(p(0)), songid_hashmap.add(p(1)), p(2).toInt))
 
-    val df_song_details = sqlContext.load("com.databricks.spark.csv", Map("path" -> (path + "Song_Details"), "header" -> "true"))
+    val df_song_details = sqlContext.load("com.databricks.spark.csv", Map("path" -> (path + "SongDetails"), "header" -> "true"))
+
     val df_metadata = df_song_details.select("track_id","title","song_id","release", "artist_id","artist_name","duration","artist_familiarity","artist_hotttnesss","year")
+
     val df_attributes = df_song_details.select("track_id","song_id","danceability", "energy", "key", "loudness" , "tempo", "time_signature")
     val df_similar = sqlContext.load("com.databricks.spark.csv", Map("path" -> (path +"lastfm_similar_dest.csv"), "header" -> "true"))
     val df_new_attributes = df_song_details.where("year >= 2009").select("track_id", "danceability", "energy", "key", "loudness", "tempo", "time_signature")
@@ -128,24 +125,19 @@ object RecoEngine {
       var topcolab = recommendations.sortWith(_.rating > _.rating).head.rating
       topcolab = topcolab / 10
       println("End Collaborative filtering Recommendation")
-      recommendations.to
+
       val song_val_temp = recommendations.flatMap {
-        line => Some(songid_hashmap.obj.find(_._2 == line.rating), math.round(line.rating / topcolab))
+        line => Some(songid_hashmap.obj.find(_._2 == line.product), math.round(line.rating / topcolab))
       }
 
-      var song_list : List[(Int, String, Double)] = Nil
-      for(user <- 1 to 1019318) {
-        song_list = model.recommendProducts(user, 10).map(p => (p.user, userid_hashmap.findval(p.product), p.rating)).toList
 
-      }
-      sc.parallelize(song_list).toDF("user","song_id","rating").registerTempTable("reccomendedsongs")
-        songidlist=""
       val temp_1 = sc.parallelize(song_val_temp)
-      for (x <- temp_1.collect()) {
 
+      for (x <- temp_1.collect()) {
         song_val += (x._1.toString.drop(6).take(18) -> x._2.toInt) //list of similar songs by collabarative recco with weightage
         songidlist =  songidlist + "'" + x._1.toString.drop(6).take(18) + "'" + ","
       }
+
       val song_val_rdd = sc.parallelize(song_val.toSeq)
       val song_val_df = song_val_rdd.toDF("song_id1", "score")
 
@@ -162,6 +154,7 @@ object RecoEngine {
         list_of_songs += (row(0).drop(1).toString -> row(1).dropRight(1).toInt)
 
       }
+
       val user_similar_songs = song.get_similar(sqlContext, list_of_songs) //Map for similar songs
       val user_similar_songs_DF = sc.parallelize(user_similar_songs.toSeq).toDF("track_id1","confidence")
 
@@ -178,6 +171,7 @@ object RecoEngine {
       for (songid<-user_similar_songs_DF.select("track_id1").collect())      {
         songidlist =  songidlist + "'" + songid.toString().drop(1).dropRight(1) + "'" + ","
       }
+
       val user_similar_songs_attr1 = df_attributes.where("track_id IN (" + songidlist.dropRight(1) + ")")
       val user_similar_songs_attr = user_similar_songs_attr1.join(user_similar_songs_DF , user_similar_songs_attr1("track_id") === user_similar_songs_DF("track_id1") )
 
@@ -198,7 +192,7 @@ object RecoEngine {
 
       val temp2 = df_reco_old_attributes.toDF("track_id", "song_id", "danceability", "energy", "key", "loudness", "tempo", "time_signature", "track_id1", "confidence")
         .select("track_id", "danceability", "energy", "key", "loudness", "tempo", "time_signature", "confidence").where("confidence > 0")
-      //println(df_reco_old_attributes.count())
+
       val final2 = temp2.select("track_id", "confidence").map(f => (f(0).toString, f(1).toString.toInt) )
 
       val colab_similar_songs_RDD_LP: RDD[LabeledPoint] = temp2.map(l =>
@@ -213,8 +207,6 @@ object RecoEngine {
               l(5).toString.toDouble))
         else LabeledPoint(0, Vectors.dense(0, 0, 0, 0, 0)))
 
-      System.gc()
-      model.userFeatures.persist()
 
       val startTime = new DateTime()
       println("Start: Training LogisticRegressionWithLBFGS with ", 1000, " songs")
@@ -272,7 +264,7 @@ object RecoEngine {
       var finallist4 =  finallist2 ++ finallist3
       var finallist5 = finallist1 ++finallist4
 
-      println("Final reccomendations")
+      println("Final recommendations")
 
       //prep fina output
       val track_conf_RDD = sc.parallelize(finallist5.toSeq.map(x => (x._1,x._2,x._3) ))

@@ -1,4 +1,4 @@
-name := "musicrecomendationusingspark"
+name := "TagGenerationAndMusicReco"
 
 version := "1.0"
 
