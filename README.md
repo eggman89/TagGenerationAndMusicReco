@@ -3,7 +3,7 @@
 
 This project attempts to answer the following 2 questions :
 
-1) Given the listetning habit of a user, how can we reccomend him the best songs suiable to his profile? This project uses a hybrid of collabarative filtering, popularity based model and content based filtering to achieve this. (RecoEngine.scala)
+-1) Given the listetning habit of a user, how can we reccomend him the best songs suiable to his profile? This project uses a hybrid of collabarative filtering, popularity based model and content based filtering to achieve this. (RecoEngine.scala)
 
 The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened enough. (Although thatt's not the case).
 
