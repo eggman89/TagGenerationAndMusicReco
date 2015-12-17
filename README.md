@@ -7,10 +7,10 @@ This project attempts to answer the following 2 questions :
 
 The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened enough. (Although thatt's not the case).
 
-1.collabarative filtering : This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collabarative filtering model using this. Using this model, we predict the songs user might like more.
+1. collabarative filtering : This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collabarative filtering model using this. Using this model, we predict the songs user might like more.
 Dataset:http://labrosa.ee.columbia.edu/millionsong/tasteprofile
 
-2.popularity based model: We find the most similar songs (built by last.fm) and reccomend the closest songs to to the user listened songs.
+2. popularity based model: We find the most similar songs (built by last.fm) and reccomend the closest songs to to the user listened songs.
 Dataset: http://labrosa.ee.columbia.edu/millionsong/lastfm
 (direct: http://labrosa.ee.columbia.edu/millionsong/sites/default/files/lastfm/lastfm_tags.db)
 
