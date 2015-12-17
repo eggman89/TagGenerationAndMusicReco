@@ -15,7 +15,7 @@ Dataset: http://labrosa.ee.columbia.edu/millionsong/lastfm
 
 The first two methods are good for songs pre 2008, but this model won't predict newly released songs (post 2009).
 
-- content based filtering :  Using the attributes of songs (tempo, energy, dancablity, time signature,key) on XXX we build a model. We then use this model to we train the new songs and find the best fit.
+3. content based filtering :  Using the attributes of songs (tempo, energy, dancablity, time signature,key) on XXX we build a model. We then use this model to we train the new songs and find the best fit.
 - 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 The architecture is as follows: http://imgur.com/a/0adNo
