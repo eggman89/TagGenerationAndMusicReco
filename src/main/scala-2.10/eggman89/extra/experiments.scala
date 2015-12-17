@@ -1,5 +1,5 @@
 import breeze.numerics.abs
-import eggman89.genreReco.{chiSqTest, doRandomForest, doNaiveBayes, doDecisionTrees}
+import eggman89.genreReco.{chiSqTest, doNaiveBayes, doDecisionTrees}
 import eggman89.musicReco._
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.types.{StringType, IntegerType, StructField, StructType}

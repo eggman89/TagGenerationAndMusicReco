@@ -1,6 +1,10 @@
 package eggman89.genreReco
 
 import org.apache.log4j.{Level, Logger}
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.classification.{RandomForestClassificationModel, RandomForestClassifier}
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+import org.apache.spark.ml.feature.{IndexToString, StringIndexer}
 import org.apache.spark.mllib.recommendation.Rating
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
@@ -30,30 +34,22 @@ object genreGenerator {
     Logger.getLogger("akka").setLevel(Level.OFF)
     Logger.getLogger("INFO").setLevel(Level.OFF)
 
+   //load tags and tag ids and attributes
 
-    println("Select a Method to classify songs")
-    println("1: Random Forest; 2:Logistic Regression With LBFGS; 3:Decision Trees;  4:Naive Bayes 5:chiSqTest(other)")
-    val method = readInt()
-    //load tags and tag ids and attributes
-
-    val map_tagid_tag = new eggman89.hashmap()
+   val map_tagid_tag = new eggman89.hashmap()
    sc.parallelize(map_tagid_tag.obj.toSeq).toDF("user", "userid").registerTempTable("userid")
    //map_tagid_tag
-    val schema_string = "track_id1 tag_id"
-    val schema = StructType(schema_string.split(" ").map(fieldName =>
-      if (fieldName == "tag_id") StructField(fieldName, IntegerType, true)
-      else StructField(fieldName, StringType, true))
-    )
+   val schema_string = "track_id1 tag_id"
+   val schema = StructType(schema_string.split(" ").map(fieldName =>
+     if (fieldName == "tag_id") StructField(fieldName, IntegerType, true)
+     else StructField(fieldName, StringType, true))
+   )
 
-
-   val tag_id_hashhmap = new eggman89.hashmap()
-   val track_id_hashhmap = new eggman89.hashmap()
-
-   val RDD_song_details = sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).map(p =>(tag_id_hashhmap.add(p(0)), track_id_hashhmap.add(p(1))
+   val DF_song_details = sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).map(p =>(p(0),p(1)
 
 
 
-  // )
+     // )
      //loudness,tempo,time_signature,key,mode,duration
      ,Vectors.dense(math.round(p(4).toString.toDouble).toDouble,math.round(p(5).toString.toDouble).toDouble,
      math.round(p(6).toString.toDouble),math.round(p(7).toString.toDouble)
@@ -75,63 +71,48 @@ object genreGenerator {
    )
      )
 
-   )
-   sc.textFile("C:/Users/sneha/Google Drive/Project/Dataset/msd_genre_dataset.txt").map(_.split(",")).
-   map
+   ).toDF("track_id","genre","features")
 
-   //RDD_song_details.foreach(println)
-    val split = RDD_song_details.randomSplit(Array(0.9,0.1))
-    val RDD_train_tid_attributes_tag_id = split(0)
-    val RDD_test_tid_attributes_tag_id = split(1)
+   val labelIndexer = new StringIndexer()
+     .setInputCol("genre")
+     .setOutputCol("indexedLabel")
+     .fit(DF_song_details)
 
+   val Array(trainingData, testData) = DF_song_details.randomSplit(Array(0.7, 0.3))
+   val labelConverter = new IndexToString()
+     .setInputCol("prediction")
+     .setOutputCol("predictedLabel")
+     .setLabels(labelIndexer.labels)
+   // Train a GBT model.
+   val rfc = new RandomForestClassifier().setMaxDepth(10).setNumTrees(2).
+     setLabelCol("indexedLabel")
+     .setFeaturesCol("features")
 
-   val RDD_LP_trainset: RDD[LabeledPoint] = RDD_train_tid_attributes_tag_id.map { line =>
-     LabeledPoint(line._1, line._3)
+   val pipeline = new Pipeline()
+     .setStages(Array(labelIndexer, rfc, labelConverter))
 
-   }
+   val model = pipeline.fit(trainingData)
 
-   val RDD_LP_testset: RDD[(Int,DenseVector,Int)]  = RDD_test_tid_attributes_tag_id.map { line => (line._2.toInt,
-     line._3.toDense, line._1) }
+   // Make predictions.
+   val predictions = model.transform(testData)
 
-   var predicted_res_RDD  : RDD[(Int, Int, Int)] = sc.emptyRDD
+   // Select example rows to display.
+   predictions.show()
+   predictions.select("track_id","predictedLabel","genre", "features","probability").show(5)
 
-    //RDD_LP_tid_attributes_tag_id.take(500).foreach(println)
-    if (method == 1)
-      {
-        predicted_res_RDD = doRandomForest.test(doRandomForest.train(RDD_LP_trainset,10,32,40),RDD_LP_testset)
-      }
+   // Select (prediction, true label) and compute test error
+   val evaluator = new MulticlassClassificationEvaluator()
+     .setLabelCol("indexedLabel")
+     .setPredictionCol("prediction")
+     .setMetricName("precision")
+   val accuracy = evaluator.evaluate(predictions)
+   println("Test Error = " + (1.0 - accuracy))
 
-    if(method ==2)
-      {
-        predicted_res_RDD = doLogisticRegressionWithLBFGS.test(doLogisticRegressionWithLBFGS.train(RDD_LP_trainset),RDD_LP_testset)
-      }
-
-    if(method ==3)
-    {
-      predicted_res_RDD = doDecisionTrees.test(doDecisionTrees.train(RDD_LP_trainset,29,32),RDD_LP_testset)
-    }
-
-    if(method ==4)
-    {
-      predicted_res_RDD = doNaiveBayes.test(doNaiveBayes.train(RDD_LP_trainset,1),RDD_LP_testset)
-    }
-    if(method ==5)
-      {
-        chiSqTest.do_test(RDD_LP_trainset)
-
-      }
+   val rfModel = model.stages(2).asInstanceOf[RandomForestClassificationModel]
 
 
-   //calculate accuracy
+ }
 
-    val predictionAndLabels : RDD[(Double,Double)] = predicted_res_RDD.toDF().map(l => (l(1).toString.toDouble,l(2).toString.toDouble))
-    val metrics = new MulticlassMetrics(predictionAndLabels.coalesce(1))
-    val precision = metrics.precision
-
-    println("Precision = " + precision)
-    println("End: Prediction")
-
-  }
 
 }
 

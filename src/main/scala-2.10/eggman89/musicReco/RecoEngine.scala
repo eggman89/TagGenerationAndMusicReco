@@ -65,7 +65,6 @@ object RecoEngine {
 
     val df_train_triplets_all = sqlContext.createDataFrame(text_train_triplets_RDD, schema)
 
-
     df_metadata.registerTempTable("meta_table")
     df_similar.registerTempTable("similar_table")
     df_attributes.registerTempTable("attributes")
@@ -118,7 +117,7 @@ object RecoEngine {
       sc.parallelize(model.recommendProducts(1, 1000))
 
       println("Starting Collaborative filtering Recommendation")
-      val recommendations = model.recommendProductsForUsers(100).toD
+      val recommendations = model.recommendProducts(user,10)
       var topcolab = recommendations.sortWith(_.rating > _.rating).head.rating
       topcolab = topcolab / 10
       println("End Collaborative filtering Recommendation")
@@ -127,7 +126,7 @@ object RecoEngine {
         line => Some(songid_hashmap.obj.find(_._2 == line.product), math.round(line.rating / topcolab))
       }
 
-
+      sc.parallelize(df_new_attributes.collect().toSeq)
       val temp_1 = sc.parallelize(song_val_temp)
 
       for (x <- temp_1.collect()) {
