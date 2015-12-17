@@ -21,7 +21,7 @@ The first two methods are good for songs pre 2008, but this model won't predict 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 The architecture is as follows: http://imgur.com/a/0adNo
 
-2.Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag for new songs(e.g. Pop_Rock, Electronica etc..)? (tagGenerator.scala)
+2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag for new songs(e.g. Pop_Rock, Electronica etc..)? (tagGenerator.scala)
 
 Currently we are able to achieve an accuracy of 70% with Random Forest.
 
