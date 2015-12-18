@@ -16,7 +16,7 @@ Dataset: http://labrosa.ee.columbia.edu/millionsong/lastfm
 
 The first two methods are good for songs pre 2008, but this model won't predict newly released songs (post 2009).
 
-c. content based filtering : to overcome this restriction, we use use the attributes of the top songs in the first two model, train a XX model and gives the reccomendation.
+c. content based filtering : to overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the reccomendation.
 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 The architecture is as follows: http://imgur.com/a/0adNo
