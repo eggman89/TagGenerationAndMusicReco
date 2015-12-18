@@ -17,7 +17,7 @@ Dataset: [Million Song Dataset Page](http://labrosa.ee.columbia.edu/millionsong/
 
 The first two methods are good for songs pre 2008, but this model won't predict newly released songs (post 2009).
 
-  - content based filtering : to overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the reccomendation.
+  - **content based filtering :** to overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the reccomendation.
 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 
@@ -38,4 +38,5 @@ Run the following two files:
 
 Team Members: 
 1. Snehasis Ghosh
+
 2. Nikhil Raina
