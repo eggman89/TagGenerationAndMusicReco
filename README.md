@@ -4,7 +4,7 @@
 
 This project attempts to answer the following 2 questions :
 
-**1. Given the listetning habit of a user, how can we reccomend him the best songs suiable to his profile? This project uses a hybrid of collabarative filtering, popularity based model and content based filtering to achieve this. ** (RecoEngine.scala)
+**1. Given the listetning habit of a user, how can we reccomend him the best songs suiable to his profile? This project uses a hybrid of collabarative filtering, popularity based model and content based filtering to achieve this. **
 
 The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened enough. (Although thatt's not the case).
 
@@ -22,7 +22,7 @@ The first two methods are good for songs pre 2008, but this model won't predict 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 The architecture is as follows: http://imgur.com/a/0adNo
 
-**Q2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag for new songs(e.g. Pop_Rock, Electronica etc..)? **(tagGenerator.scala)
+**Q2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag for new songs(e.g. Pop_Rock, Electronica etc..)? **
 
 Currently we are able to achieve an accuracy of 70% with Random Forest.
 
