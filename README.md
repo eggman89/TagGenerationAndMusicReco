@@ -8,7 +8,7 @@ This project is an attempt to build a hybrid music recommender system .
 
 This project attempts to answer the following 2 questions:
 
-1.  Given the listening habit of a user, how can we recommend him or her the best songs suitable to his profile? This project uses a hybrid of collaborative filtering, popularity based model and content based filtering to achieve this.
+1. Given the listening habit of a user, how can we recommend him or her the best songs suitable to his profile? This project uses a hybrid of collaborative filtering, popularity based model and content based filtering to achieve this.
 
    The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened     enough. (Although that's not the case).
 
@@ -22,7 +22,7 @@ This project attempts to answer the following 2 questions:
 
    For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 
-2.  Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature, key and 12 timbre features (avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop\_Rock, Electronica etc..)?
+2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature, key and 12 timbre features (avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop\_Rock, Electronica etc..)?
 
   Currently we are able to achieve an accuracy of 70% with Random Forest.
 
