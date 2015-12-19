@@ -8,8 +8,8 @@ This project is an attempt to build a hybrid music recommender system .
 
 This project attempts to answer the following 2 questions:
 
->Given the listening habit of a user, how can we recommend him or her the best songs suitable to his profile? This project uses a hybrid of collaborative filtering, popularity based model and content based filtering to achieve this.
-
+1. Given the listening habit of a user, how can we recommend him or her the best songs suitable to his profile? This project uses a hybrid of collaborative filtering, popularity based model and content based filtering to achieve this.
+2. test
 
    The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened     enough. (Although that's not the case).
 
