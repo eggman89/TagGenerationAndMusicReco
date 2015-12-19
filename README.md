@@ -13,13 +13,13 @@ This project attempts to answer the following 2 questions:
 
    The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened     enough. (Although that's not the case).
 
--   [**Collaborative filtering**](https://en.wikipedia.org/wiki/Collaborative_filtering) **:** This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collaborative filtering model using this. Using this model, we predict the songs user might like more. Dataset:[Million Song Dataset](http://labrosa.ee.columbia.edu/millionsong/tasteprofile)
+  -   [**Collaborative filtering**](https://en.wikipedia.org/wiki/Collaborative_filtering) **:** This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collaborative filtering model using this. Using this model, we predict the songs user might like more. Dataset:[Million Song Dataset](http://labrosa.ee.columbia.edu/millionsong/tasteprofile)
 
--   **Popularity based model:** We find the most similar songs (built by last.fm) and reccomend the closest songs to to the user listened songs. Dataset: [Million Song Dataset Page](http://labrosa.ee.columbia.edu/millionsong/lastfm) [Direct Link](http://labrosa.ee.columbia.edu/millionsong/sites/default/files/lastfm/lastfm_tags.db)
+  -   **Popularity based model:** We find the most similar songs (built by last.fm) and reccomend the closest songs to to the user listened songs. Dataset: [Million Song Dataset Page](http://labrosa.ee.columbia.edu/millionsong/lastfm) [Direct Link](http://labrosa.ee.columbia.edu/millionsong/sites/default/files/lastfm/lastfm_tags.db)
 
    The first two methods are good for songs pre 2008, but this model won't predict newly released songs (post 2009).
 
--   [**Content-based filtering**](https://en.wikipedia.org/wiki/Recommender_system#Content-based_filtering) **:** To overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the recommendation.
+  -   [**Content-based filtering**](https://en.wikipedia.org/wiki/Recommender_system#Content-based_filtering) **:** To overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the recommendation.
 
    For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 
