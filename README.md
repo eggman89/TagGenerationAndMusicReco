@@ -1,7 +1,7 @@
 Tag Generation and Music Recommendation
 =======================================
 
-Using Apache Spark
+####Using Apache Spark
 ------------------
 
 This project is an attempt to build a hybrid music recommender system .
