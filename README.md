@@ -4,11 +4,11 @@
 
 This project attempts to answer the following 2 questions :
 
-1. Given the listetning habit of a user, how can we reccomend him or her the best songs suiable to his profile? This project uses a hybrid of collabarative filtering, popularity based model and content based filtering to achieve this. 
+1. Given the listening habit of a user, how can we recommend him or her the best songs suitable to his profile? This project uses a hybrid of collaborative filtering, popularity based model and content based filtering to achieve this. 
 
 The project assumes that we have user listening habits of all songs till 2008 and the songs post 2009 have not been listened enough. (Although that's not the case).
 
-  - **collabarative filtering :** This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collabarative filtering model using this. Using this model, we predict the songs user might like more.
+  - **[collaborative filtering](https://en.wikipedia.org/wiki/Collaborative_filtering) :** This project loads the data of 120k users (48 million plays with play count) and trains the MLlib collaborative filtering model using this. Using this model, we predict the songs user might like more.
 Dataset:[Million Song Dataset](http://labrosa.ee.columbia.edu/millionsong/tasteprofile)
 
   - **popularity based model:** We find the most similar songs (built by last.fm) and reccomend the closest songs to to the user listened songs.
@@ -17,12 +17,12 @@ Dataset: [Million Song Dataset Page](http://labrosa.ee.columbia.edu/millionsong/
 
 The first two methods are good for songs pre 2008, but this model won't predict newly released songs (post 2009).
 
-  - **content based filtering :** to overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the reccomendation.
+  - **[content-based filtering](https://en.wikipedia.org/wiki/Recommender_system#Content-based_filtering) :** to overcome this restriction, we use use the attributes of the top songs in the first two model, train logistic regression model and gives the recommendation.
 
 For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 
 
-Q2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop_Rock, Electronica etc..)? 
+2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature,key and 12 timbre features(avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop_Rock, Electronica etc..)? 
 
 Currently we are able to achieve an accuracy of 70% with Random Forest.
 
