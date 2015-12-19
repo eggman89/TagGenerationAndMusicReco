@@ -23,7 +23,7 @@ This project attempts to answer the following 2 questions:
 
    For all the above three model, we assign a score to the songs. We then sort the songs by the score and give the final output.
 
-2.Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature, key and 12 timbre features (avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop\_Rock, Electronica etc..)?
+2. Given a set of songs and it's attributes (i.e tempo, energy, dancablity, time signature, key and 12 timbre features (avg timbre and var timbre) ) , can we predict the tag/genre for new songs(e.g. Pop\_Rock, Electronica etc..)?
 
   Currently we are able to achieve an accuracy of 70% with Random Forest.
 
