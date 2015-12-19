@@ -1,4 +1,4 @@
-Tag Generation and Music Recommendation
+Genre Generation and Music Recommendation
 =======================================
 
 ####Using Apache Spark
